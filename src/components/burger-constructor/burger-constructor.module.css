@@ -1,0 +1,32 @@
+.drag{
+    overflow-y: scroll;
+    max-height: 440px;
+    padding-right: 10px;
+    flex-direction: column;
+    gap: 10px;
+}
+.dragItem{
+    position: relative;
+    margin-top: 10px;
+}
+.dragItem:first-child{
+    margin-top: 0;
+}
+.dragIcon{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: calc(50% - 12px);
+    left: -40px;
+}
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #2F2F37;
+    border-radius: 20px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+    border-radius: 20px;
+}
