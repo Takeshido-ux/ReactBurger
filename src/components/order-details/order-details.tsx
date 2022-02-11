@@ -1,10 +1,10 @@
 import React from 'react';
 import style from './order-details.module.css';
 import img from '../../images/done.png';
+import PropTypes from 'prop-types';
 
 //@ts-ignore
 export default function OrderDetails(props) {
-    console.log(props.itemId)
   return (
     <>
     <div className={style.title}>
@@ -26,3 +26,8 @@ export default function OrderDetails(props) {
     </>
   )
 }
+
+OrderDetails.propTypes = {
+  handleToggleModal: PropTypes.func,
+  itemId: PropTypes.string
+}; 

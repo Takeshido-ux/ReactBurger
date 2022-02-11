@@ -5,8 +5,9 @@ import BurgerIngredients from "./components/burger-ingredients/burger-ingredient
 import BurgerConstructor from "./components/burger-constructor/burger-constructor";
 import ModalOverlay from './components/modal-overlay/modal-overlay';
 import Modal from './components/modal/modal';
+import { DataContext } from './utils/data-context';
 
-//@ts-ignore
+
 function App() {
   const [state, setState] = React.useState([]);
   const URL = 'https://norma.nomoreparties.space/api/ingredients';
@@ -34,16 +35,14 @@ function App() {
 
   return (
     <div className="App">
-      <AppHeader/>
+      <AppHeader />
+      <DataContext.Provider value={state}>
       <div>
         <Modal
-          //@ts-ignore
           modal={modal}
-          productData={state} 
           handleToggleModal={handleToggleModal}
         />
         <ModalOverlay
-          //@ts-ignore 
           modal={modal}
           handleToggleModal={handleToggleModal}
         />
@@ -51,13 +50,12 @@ function App() {
       <div style={{display: 'flex', width: '70%', margin: '0 auto'}}>
         <BurgerIngredients 
         handleToggleModal={handleToggleModal} 
-        productData={state}
         />
         <BurgerConstructor 
-        productData={state}
         handleToggleModal={handleToggleModal} 
         />
       </div>
+      </DataContext.Provider>
     </div>
   );
 }

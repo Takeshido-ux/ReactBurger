@@ -1,8 +1,14 @@
 import arr from '../../utils/data';
 import style from './burger-constructor.module.css'
 import {ConstructorElement, Button, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import { DataContext } from '../../utils/data-context';
+
+
 //@ts-ignore
 const BurgerConstructor = (props) => {
+    const productData = useContext(DataContext);
 
     return <div style={{width: '50%', display: 'flex', justifyContent: 'center'}}>
       <div className='pt-30'>
@@ -48,3 +54,8 @@ const BurgerConstructor = (props) => {
   </div>;
 }
 export default BurgerConstructor;
+
+BurgerConstructor.propTypes = {
+    productData: PropTypes.array,
+    handleToggleModal: PropTypes.func
+}; 

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import style from './modal.module.css';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
+import PropTypes from 'prop-types';
 
 const modalRoot = document.getElementById("modals");
 //@ts-ignore
@@ -18,7 +19,6 @@ export default function Modal(props) {
         { props.modal.itemId === 'orderDetails' ?
         (
           <OrderDetails
-          productData={props.productData}
           handleToggleModal={props.handleToggleModal}
           itemId={props.modal.itemId}
           />
@@ -26,7 +26,6 @@ export default function Modal(props) {
         :
         (
         <IngredientDetails 
-          productData={props.productData}
           handleToggleModal={props.handleToggleModal}
           itemId={props.modal.itemId}
         />
@@ -39,3 +38,9 @@ export default function Modal(props) {
     modalRoot
   ));
 }
+
+Modal.propTypes = {
+  productData: PropTypes.array,
+  handleToggleModal: PropTypes.func,
+  modal: PropTypes.object
+}; 

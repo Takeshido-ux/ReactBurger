@@ -1,9 +1,12 @@
 import {Tab, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
+import React, { useContext } from 'react';
 import style from './burger-ingredients.module.css';
+import PropTypes from 'prop-types';
+import { DataContext } from '../../utils/data-context';
 
 //@ts-ignore
 const BurgerIngredients = (props) => {
+    const productData = useContext(DataContext);
     const [current, setCurrent] = React.useState('one');
     return (
         <div style={{width: '50%'}}>
@@ -25,7 +28,7 @@ const BurgerIngredients = (props) => {
                     <div style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap'}}>
                     
                         {   //@ts-ignore
-                            props.productData.map(item => {
+                            productData.map(item => {
                                 return(
                                     item.type === 'bun' ? 
                                     <div id={item._id} onClick={props.handleToggleModal} key={item._id} style={{width: '50%', cursor: 'pointer', marginBottom: '40px'}}>
@@ -34,7 +37,7 @@ const BurgerIngredients = (props) => {
                                         <p className="text text_type_digits-default mr-2">{item.price}</p>
                                         <CurrencyIcon type="primary" />
                                     </div>
-                                    <p style={{textAlign: 'center'}} className={"text text_type_main-default" + ' ' + style.marginAuto}>{item.name}</p>
+                                    <p style={{textAlign: 'center'}} className={`text text_type_main-default ${style.marginAuto}`}>{item.name}</p>
                                     </div> 
                                     :
                                     null
@@ -47,7 +50,7 @@ const BurgerIngredients = (props) => {
                     <p className="text text_type_main-medium mb-8 mt-8">Соусы</p>
                     <div style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap'}}>
                     {       //@ts-ignore
-                            props.productData.map(item => {
+                            productData.map(item => {
                                 return(
                                     item.type === 'sauce' ? 
                                     <div id={item._id} onClick={props.handleToggleModal} key={item._id} style={{width: '50%', cursor: 'pointer', marginBottom: '40px'}}>
@@ -56,7 +59,7 @@ const BurgerIngredients = (props) => {
                                         <p className="text text_type_digits-default mr-2">{item.price}</p>
                                         <CurrencyIcon type="primary" />
                                     </div>
-                                    <p style={{textAlign: 'center'}} className={"text text_type_main-default" + ' ' + style.marginAuto}>{item.name}</p>
+                                    <p style={{textAlign: 'center'}} className={`text text_type_main-default ${style.marginAuto}`}>{item.name}</p>
                                     </div> 
                                     :
                                     null
@@ -69,7 +72,7 @@ const BurgerIngredients = (props) => {
                     <p className="text text_type_main-medium mb-8 mt-8">Начинки</p>
                     <div style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap'}}>
                     {       //@ts-ignore
-                            props.productData.map(item => {
+                            productData.map(item => {
                                 return(
                                     item.type === 'main' ? 
                                     <div id={item._id} onClick={props.handleToggleModal} key={item._id} style={{width: '50%', cursor: 'pointer', marginBottom: '40px'}}>
@@ -78,7 +81,7 @@ const BurgerIngredients = (props) => {
                                         <p className="text text_type_digits-default mr-2">{item.price}</p>
                                         <CurrencyIcon type="primary" />
                                     </div>
-                                    <p style={{textAlign: 'center'}} className={"text text_type_main-default" + ' ' + style.marginAuto}>{item.name}</p>
+                                    <p style={{textAlign: 'center'}} className={`text text_type_main-default ${style.marginAuto}`}>{item.name}</p>
                                     </div> 
                                     :
                                     null
@@ -92,6 +95,9 @@ const BurgerIngredients = (props) => {
     );
 };
 
-
-
 export default BurgerIngredients;
+
+BurgerIngredients.propTypes = {
+    productData: PropTypes.array,
+    handleToggleModal: PropTypes.func,
+}; 
