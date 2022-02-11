@@ -100,4 +100,5 @@ export default BurgerIngredients;
 BurgerIngredients.propTypes = {
     productData: PropTypes.array,
     handleToggleModal: PropTypes.func,
+    createBurger: PropTypes.func
 }; 
