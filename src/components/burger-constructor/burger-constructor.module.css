@@ -1,6 +1,6 @@
 .drag{
-    overflow-y: scroll;
     max-height: 440px;
+    overflow-y: auto;
     padding-right: 10px;
     flex-direction: column;
     gap: 10px;

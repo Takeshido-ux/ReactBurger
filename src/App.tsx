@@ -9,7 +9,7 @@ import Modal from './components/modal/modal';
 //@ts-ignore
 function App() {
   const [state, setState] = React.useState([]);
-  const URL = 'https://norma.nomoreparties.space/api/ingredients ';
+  const URL = 'https://norma.nomoreparties.space/api/ingredients';
   useEffect(() => {
     const getProductData = async () => {
       const res = await fetch(URL);
