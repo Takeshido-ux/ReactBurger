@@ -13,14 +13,14 @@ export default function OrderDetails(props) {
         </p>
     </div>
     <div>
-        <p className={`text text_type_digits-large ${style.textCenter + ' ' + style.fontSize}`}>034536</p>
+        <p className={`text text_type_digits-large ${style.textCenter + ' ' + style.font}`}>034536</p>
         <p className={`text text_type_main-medium ${style.textCenter}`}>
         идентификатор заказа
         </p>
         <img className={style.img} src={img} alt="" />
         <p className={`text text_type_main-default ${style.textCenter}`}>
         Ваш заказ начали готовить<br />
-        Дождитесь готовности на орбитальной станции
+        <span style={{color: '#8585AD'}}>Дождитесь готовности на орбитальной станции</span>
         </p>
     </div>
     </>
