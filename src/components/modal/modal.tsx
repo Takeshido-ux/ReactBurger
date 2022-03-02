@@ -3,44 +3,28 @@ import ReactDOM from 'react-dom';
 import style from './modal.module.css';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
-import PropTypes from 'prop-types';
+import ModalOverlay from '../modal-overlay/modal-overlay';
+import { useSelector } from 'react-redux';
 
 const modalRoot = document.getElementById("modals");
 //@ts-ignore
-export default function Modal(props) {
+export default function Modal() {
+  //@ts-ignore
+  const isActive = useSelector(store => store.modalToggle.isActive)
+  //@ts-ignore
+  const id = useSelector(store => store.ingredientIdSet.ingredientId)
   //@ts-ignore
   return (ReactDOM.createPortal(
     <>
-    
-      {
-        props.modal.isToggle && 
+      {isActive && 
         //@ts-ignore
       (<div className={style.modal}>
-        { props.modal.itemId === 'orderDetails' ?
-        (
-          <OrderDetails
-          handleToggleModal={props.handleToggleModal}
-          itemId={props.modal.itemId}
-          />
-        ) 
-        :
-        (
-        <IngredientDetails 
-          handleToggleModal={props.handleToggleModal}
-          itemId={props.modal.itemId}
-        />
-        )
-        }
-      </div>)
-      }
+        { id === 'orderDetails' ? <OrderDetails/> : <IngredientDetails/>}
+      </div>)}
+      <ModalOverlay/>
     </>,
     //@ts-ignore
     modalRoot
   ));
 }
 
-Modal.propTypes = {
-  productData: PropTypes.array,
-  handleToggleModal: PropTypes.func,
-  modal: PropTypes.object
-}; 

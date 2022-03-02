@@ -1,19 +1,28 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import style from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
-import { DataContext } from '../../utils/data-context';
+import { useSelector, useDispatch } from 'react-redux';
+import { TOGGLE } from '../../services/actions/modal';
+
+
 //@ts-ignore
 export default function IngredientDetails(props) {
-    const productData = useContext(DataContext);
+    const dispatch = useDispatch();
+    const handleToggleModal = () => {
+        dispatch({type: TOGGLE});
+    }
+    //@ts-ignore
+    const ingredients = useSelector(store => store.ingredients.ingredients)
+    //@ts-ignore
+    const id = useSelector(store => store.ingredientIdSet.ingredientId)
     //@ts-ignore 
-    let src = productData.find(item => item._id === props.itemId ? item.image_large : null)
+    let src = ingredients.find(item => item._id === id ? item.image_large : null)
     return (
       <>
         <div className={style.title}>
             <p className="text text_type_main-default">
                 Детали ингредиента
             </p>
-            <p onClick={props.handleToggleModal} className={`text text_type_main-default ${style.cursor}`}>
+            <p onClick={handleToggleModal} className={`text text_type_main-default ${style.cursor}`}>
                 x   
             </p>
         </div>
@@ -22,35 +31,29 @@ export default function IngredientDetails(props) {
             <p style={{textAlign: 'center'}} className={`text text_type_main-default`}>
             {
                 //@ts-ignore
-                productData.map(item => item._id === props.itemId ? item.name : null)
+                ingredients.map(item => item._id === id ? item.name : null)
             }
             </p>
             <div className={style.ingredients__item}>
                 <p className={style.p}>Калории,ккал<br />{
                     //@ts-ignore
-                    productData.map(item => item._id === props.itemId ? item.calories : null)
+                    ingredients.map(item => item._id === id ? item.calories : null)
                 }</p>
                 <p className={style.p}>Белки, г<br />{
                     //@ts-ignore
-                    productData.map(item => item._id === props.itemId ? item.proteins : null)
+                    ingredients.map(item => item._id === id ? item.proteins : null)
                 }</p>
                 <p className={style.p}>Жиры, г<br />{
                     //@ts-ignore
-                    productData.map(item => item._id === props.itemId ? item.fat : null)
+                    ingredients.map(item => item._id === id ? item.fat : null)
                 }
                 </p>
                 <p className={style.p}>Углеводы, г<br />{
                     //@ts-ignore
-                    productData.map(item => item._id === props.itemId ? item.carbohydrates : null)
+                    ingredients.map(item => item._id === id ? item.carbohydrates : null)
                 }</p> 
             </div>
         </div>
       </>
   )
 }
-
-IngredientDetails.propTypes = {
-    handleToggleModal: PropTypes.func,
-    itemId: PropTypes.string,
-    productData: PropTypes.array
-}; 
