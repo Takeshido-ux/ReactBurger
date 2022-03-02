@@ -1,19 +1,26 @@
 import React from 'react';
 import style from './order-details.module.css';
 import img from '../../images/done.png';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { TOGGLE } from '../../services/actions/modal';
 
 //@ts-ignore
 export default function OrderDetails(props) {
+  //@ts-ignore
+  const orderInfo = useSelector(store => store.orderInfo);
+  const dispatch = useDispatch();
+  const handleToggleModal = () => {
+      dispatch({type: TOGGLE});
+  }
   return (
     <>
     <div className={style.title}>
-        <p onClick={props.handleToggleModal} className={`text text_type_main-default ${style.cursor}`}>
+        <p onClick={handleToggleModal} className={`text text_type_main-default ${style.cursor}`}>
             x   
         </p>
     </div>
     <div>
-        <p className={`text text_type_digits-large ${style.textCenter + ' ' + style.font}`}>034536</p>
+        <p className={`text text_type_digits-large ${style.textCenter + ' ' + style.font}`}>{orderInfo.orderNumber}</p>
         <p className={`text text_type_main-medium ${style.textCenter}`}>
         идентификатор заказа
         </p>
@@ -27,7 +34,3 @@ export default function OrderDetails(props) {
   )
 }
 
-OrderDetails.propTypes = {
-  handleToggleModal: PropTypes.func,
-  itemId: PropTypes.string
-}; 

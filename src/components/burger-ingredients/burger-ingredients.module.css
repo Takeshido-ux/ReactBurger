@@ -5,6 +5,17 @@
     display: block;
     margin: 0 auto;
 }
+.counter{
+    position: absolute;
+    right: 20px;
+    top: 0px;
+}
+.ingredient{
+    width: 50%; 
+    cursor: pointer; 
+    margin-bottom: 40px; 
+    position: relative;
+}
 .scrollBar{
     height: 670px;
     overflow-y: scroll;
