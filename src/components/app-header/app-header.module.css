@@ -29,5 +29,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #8585AD;
+}
+.your__profile__active{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
 

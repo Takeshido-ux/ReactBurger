@@ -1,34 +1,26 @@
-import React from "react";
-import style from "./ingredient-details.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import { TOGGLE } from "../../services/actions/modal";
+import React, { useMemo } from "react";
+import style from "./ingredient.module.css";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
-export default function IngredientDetails() {
-  const dispatch = useDispatch();
-  const handleToggleModal = () => {
-    dispatch({ type: TOGGLE });
-  };
+const Ingredient = () => {
   //@ts-ignore
   const ingredients = useSelector((store) => store.ingredients.ingredients);
   //@ts-ignore
-  const id = useSelector((store) => store.ingredientIdSet.ingredientId);
+  const { id } = useParams();
   //@ts-ignore
-  let { image_large } = ingredients.find((item) =>
-    item._id === id ? item.image_large : null
-  );
+  let item = useMemo(() => {
+    if (ingredients !== []) {
+      //@ts-ignore
+      return ingredients.find((item) =>
+        item._id === id ? item.image_large : null
+      );
+    }
+  }, [ingredients, id]);
   return (
-    <>
-      <div className={style.title}>
-        <p className="text text_type_main-medium">Детали ингредиента</p>
-        <p
-          onClick={handleToggleModal}
-          className={`text text_type_main-medium ${style.cursor}`}
-        >
-          x
-        </p>
-      </div>
+    <div className={style.ingredient}>
       <div>
-        <img className={style.img} src={image_large} alt="" />
+        <img className={style.img} src={item?.image_large} alt="" />
         <p
           style={{ textAlign: "center" }}
           className={`text text_type_main-default`}
@@ -76,6 +68,8 @@ export default function IngredientDetails() {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
-}
+};
+
+export default Ingredient;

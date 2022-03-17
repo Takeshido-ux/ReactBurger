@@ -1,0 +1,32 @@
+.cursor{
+    cursor: pointer;
+}
+.profilePage{
+    padding-top: 100px;
+    margin: 0 auto;
+    width: 65%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    color: #8585AD;
+}
+.margin{
+    margin-top: 20px;
+}
+.form{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.profileInner{
+    width: 30%;
+}
+.buttons{
+    margin-top: 20px;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
