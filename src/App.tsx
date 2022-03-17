@@ -1,24 +1,20 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { BrowserRouter } from "react-router-dom";
+import AppRouter from "./components/app-router/app-router";
 import AppHeader from "./components/app-header/app-header";
-import BurgerIngredients from "./components/burger-ingredients/burger-ingredients";
-import BurgerConstructor from "./components/burger-constructor/burger-constructor";
-import Modal from './components/modal/modal';
-
-
+import Modal from "./components/modal/modal";
 
 function App() {
   return (
-    <div className="App">
-      <AppHeader />
-      <div className='burger_container'>
-        <BurgerIngredients />
-        <BurgerConstructor />
+    <BrowserRouter>
+      <div className="App">
+        <AppHeader />
+        <AppRouter />
+        <Modal />
       </div>
-      <Modal/>
-    </div>
+    </BrowserRouter>
   );
 }
-
 
 export default App;
