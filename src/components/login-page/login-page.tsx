@@ -9,28 +9,24 @@ import {
 import style from "./login-page.module.css";
 import { FORGOT_PASSWORD_ROUTE, REGISTER_ROUTE } from "../../utils/constants";
 import { logInUserThunk } from "../../services/actions/user";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/redusers/index";
 
 const LoginPage = () => {
-  //@ts-ignore
   const { isAuth } = useSelector((store) => store.user);
   const state = useLocation().state;
   const dispatch = useDispatch();
-  //@ts-ignore
   const { user } = useSelector((store) => store.user);
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-  //@ts-ignore
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
-  //@ts-ignore
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(logInUserThunk(form.email, form.password));
     setForm({
@@ -49,22 +45,16 @@ const LoginPage = () => {
           <Input
             type={"text"}
             placeholder={"email"}
-            //@ts-ignore
             onChange={onChange}
-            //@ts-ignore
             value={form.email}
             name={"email"}
-            //@ts-ignore
             error={false}
-            errorText={user.message}
             size={"default"}
           />
         </div>
         <div className={style.margin}>
           <PasswordInput
-            //@ts-ignore
             onChange={onChange}
-            //@ts-ignore
             value={form.password}
             name={"password"}
           />

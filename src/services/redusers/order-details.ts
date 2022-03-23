@@ -1,11 +1,14 @@
-import { GET_ORDER_INFO } from "../actions/order-details";
+import { GET_ORDER_INFO, TOrderInfoAction } from "../actions/order-details";
 
 const initialState = {
   orderName: "",
-  orderNumber: null,
+  orderNumber: 0,
 };
 
-export const orderInfoReducer = (state = initialState, action) => {
+export const orderInfoReducer = (
+  state = initialState,
+  action: TOrderInfoAction
+) => {
   switch (action.type) {
     case GET_ORDER_INFO: {
       return {

@@ -1,10 +1,18 @@
 import { LOGIN_ROUTE, RESET_PASSWORD_ROUTE } from "../../utils/constants";
+import { AppDispatch, AppThunk } from "../redusers";
 
-export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
-export const RESET_PASSWORD = "RESET_PASSWORD";
-
-export const forgotPasswordThunk = (email) => {
-  return function (dispatch) {
+export const FORGOT_PASSWORD: "FORGOT_PASSWORD" = "FORGOT_PASSWORD";
+export const RESET_PASSWORD: "RESET_PASSWORD" = "RESET_PASSWORD";
+export type TResetPasswordAction = {
+  type: string;
+  payload: {
+    success: boolean;
+    message: string;
+  };
+  pathName: string;
+};
+export const forgotPasswordThunk: AppThunk = (email) => {
+  return function (dispatch: AppDispatch) {
     fetch("https://norma.nomoreparties.space/api/password-reset", {
       method: "POST",
       headers: {
@@ -24,8 +32,8 @@ export const forgotPasswordThunk = (email) => {
       });
   };
 };
-export const resetPasswordThunk = (password, code) => {
-  return function (dispatch) {
+export const resetPasswordThunk: AppThunk = (password, code) => {
+  return function (dispatch: AppDispatch) {
     fetch(" https://norma.nomoreparties.space/api/password-reset/reset", {
       method: "POST",
       headers: {

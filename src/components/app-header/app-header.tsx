@@ -17,12 +17,9 @@ import { getIngredients } from "../../services/actions/burger-ingredients";
 
 const AppHeader = () => {
   const dispatch = useDispatch();
-  //@ts-ignore
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
-  //@ts-ignore
-  const { isAuth } = useSelector((store) => store.user);
   return (
     <div className={style.header}>
       <div className={style.container}>

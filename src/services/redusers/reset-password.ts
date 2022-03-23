@@ -1,11 +1,22 @@
-import { FORGOT_PASSWORD, RESET_PASSWORD } from "../actions/reset-password";
+import {
+  FORGOT_PASSWORD,
+  RESET_PASSWORD,
+  TResetPasswordAction,
+} from "../actions/reset-password";
+import { TResetPassword } from "../../utils/types";
 
-const initialState = {
-  answer: {},
+const initialState: TResetPassword = {
+  answer: {
+    message: "",
+    success: false,
+  },
   pathName: "",
 };
 
-export const resetPasswordReducer = (state = initialState, action) => {
+export const resetPasswordReducer = (
+  state = initialState,
+  action: TResetPasswordAction
+) => {
   switch (action.type) {
     case FORGOT_PASSWORD:
       return {

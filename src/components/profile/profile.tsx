@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, useLocation } from "react-router-dom";
 import { PROFILE_ORDERS_ROUTE, PROFILE_ROUTE } from "../../utils/constants";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/redusers/index";
 import {
   getUserThunk,
   logOutUserThunk,
@@ -21,10 +21,7 @@ export const Profile = () => {
     const accessToken = getCookie("accessToken");
     dispatch(getUserThunk(accessToken));
   }, [dispatch]);
-  const { user } = useSelector(
-    //@ts-ignore
-    (store) => store.user
-  );
+  const { user } = useSelector((store) => store.user);
   const [form, setForm] = useState({
     nick: user.user?.name ?? "",
     email: user.user?.email ?? "",
@@ -37,27 +34,27 @@ export const Profile = () => {
       password: "",
     });
   }, [user]);
-  //@ts-ignore
-  const onChange = (e) => {
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
-  //@ts-ignore
-  const handleExitClick = (e) => {
+
+  const handleExitClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const refreshToken = getCookie("refreshToken");
     dispatch(logOutUserThunk(refreshToken));
   };
-  //@ts-ignore
-  const onSubmit = (e) => {
+
+  const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const accessToken = getCookie("accessToken");
+    const accessToken: string | undefined = getCookie("accessToken");
     dispatch(resetUserThunk(form.nick, form.email, form.password, accessToken));
   };
-  //@ts-ignore
-  const onClose = (e) => {
+
+  const onClose = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setForm({
       nick: user.user?.name,
@@ -93,9 +90,7 @@ export const Profile = () => {
           <Input
             type={"text"}
             placeholder={"Name"}
-            //@ts-ignore
             onChange={onChange}
-            //@ts-ignore
             value={form.nick}
             name={"nick"}
             error={false}
@@ -108,9 +103,7 @@ export const Profile = () => {
           <Input
             type={"text"}
             placeholder={"Email"}
-            //@ts-ignore
             onChange={onChange}
-            //@ts-ignore
             value={form.email}
             name={"email"}
             error={false}
@@ -121,9 +114,7 @@ export const Profile = () => {
         </div>
         <div className={style.margin}>
           <PasswordInput
-            //@ts-ignore
             onChange={onChange}
-            //@ts-ignore
             value={form.password}
             name={"password"}
           />

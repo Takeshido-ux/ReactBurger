@@ -3,14 +3,34 @@ import {
   ADD_CONSTRUCTOR_INGREDIENTS,
   CHANGE_CONSTRUCTOR_INGREDIENT_POSITION,
   REMOVE_CONSTRUCTOR_INGREDIENT,
+  TConstructorIngredientsAction,
 } from "../actions/burger-constructor";
+import { TConstructorIngredients } from "../../utils/types";
 
-const initialState = {
+const initialState: TConstructorIngredients = {
   constructorIngredients: [],
-  constructorIngredient: {},
+  constructorIngredient: {
+    type: "",
+    _id: "",
+    index: 0,
+    price: 0,
+    name: "",
+    image_mobile: "",
+    image: "",
+    count: 0,
+    isAdded: true,
+    image_large: "",
+    calories: "",
+    carbohydrates: "",
+    proteins: "",
+    fat: "",
+  },
 };
 
-export const constructorIngredientsReducer = (state = initialState, action) => {
+export const constructorIngredientsReducer = (
+  state = initialState,
+  action: TConstructorIngredientsAction
+): TConstructorIngredients => {
   switch (action.type) {
     case ADD_CONSTRUCTOR_INGREDIENT:
       return {
@@ -18,7 +38,7 @@ export const constructorIngredientsReducer = (state = initialState, action) => {
         constructorIngredient: action.payload,
       };
     case REMOVE_CONSTRUCTOR_INGREDIENT:
-      state.constructorIngredients.splice(action.payload, 1);
+      state.constructorIngredients.splice(action.index, 1);
       return {
         ...state,
         constructorIngredients: state.constructorIngredients,
@@ -36,13 +56,43 @@ export const constructorIngredientsReducer = (state = initialState, action) => {
             ),
             tempObj,
           ],
-          constructorIngredient: {},
+          constructorIngredient: {
+            type: "",
+            _id: "",
+            index: 0,
+            price: 0,
+            name: "",
+            image_mobile: "",
+            image: "",
+            count: 0,
+            isAdded: true,
+            image_large: "",
+            calories: "",
+            carbohydrates: "",
+            proteins: "",
+            fat: "",
+          },
         };
       } else {
         return {
           ...state,
           constructorIngredients: [...state.constructorIngredients, tempObj],
-          constructorIngredient: {},
+          constructorIngredient: {
+            type: "",
+            _id: "",
+            index: 0,
+            price: 0,
+            name: "",
+            image_mobile: "",
+            image: "",
+            count: 0,
+            isAdded: true,
+            image_large: "",
+            calories: "",
+            carbohydrates: "",
+            proteins: "",
+            fat: "",
+          },
         };
       }
     case CHANGE_CONSTRUCTOR_INGREDIENT_POSITION:

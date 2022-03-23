@@ -1,10 +1,13 @@
-import { TOGGLE, GET_ID } from "../actions/modal";
+import { TModalAction, TOGGLE } from "../actions/modal";
 
 const modalState = {
   isActive: false,
 };
 
-export const modalToggleReducer = (state = modalState, action) => {
+export const modalToggleReducer = (
+  state = modalState,
+  action: TModalAction
+) => {
   switch (action.type) {
     case TOGGLE:
       return {

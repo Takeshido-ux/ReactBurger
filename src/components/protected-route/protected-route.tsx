@@ -1,12 +1,9 @@
 import { Navigate, useLocation, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/redusers/index";
 import { LOGIN_ROUTE } from "../../utils/constants";
 
 export default function ProtectedRoute() {
-  const { isAuth } = useSelector(
-    //@ts-ignore
-    (store) => store.user
-  );
+  const { isAuth } = useSelector((store) => store.user);
   const location = useLocation();
 
   return isAuth ? (

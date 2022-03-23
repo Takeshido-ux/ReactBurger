@@ -1,8 +1,23 @@
 import { retriableFetch, setCookie } from "../../utils/retriable-fetch";
-export const GET_USER = "GET_USER";
+import { AppDispatch, AppThunk } from "../redusers";
+export const GET_USER: "GET_USER" = "GET_USER";
 
-export const addUserThunk = (email, password, name) => {
-  return async function (dispatch) {
+export type TUserAction = {
+  type: string;
+  payload: {
+    success: boolean;
+    user: {
+      email: string;
+      name: string;
+    };
+    accessToken: string | undefined;
+    refreshToken: string;
+  };
+  isAuth: boolean;
+};
+
+export const addUserThunk: AppThunk = (email, password, name) => {
+  return async function (dispatch: AppDispatch) {
     const res = await fetch(
       "https://norma.nomoreparties.space/api/auth/register",
       {
@@ -22,8 +37,8 @@ export const addUserThunk = (email, password, name) => {
     dispatch({ type: GET_USER, payload: data, isAuth: data.success });
   };
 };
-export const logInUserThunk = (email, password) => {
-  return async function (dispatch) {
+export const logInUserThunk: AppThunk = (email, password) => {
+  return async function (dispatch: AppDispatch) {
     const res = await fetch(
       "https://norma.nomoreparties.space/api/auth/login",
       {
@@ -46,8 +61,8 @@ export const logInUserThunk = (email, password) => {
     dispatch({ type: GET_USER, payload: data, isAuth: data.success });
   };
 };
-export const logOutUserThunk = (refreshToken) => {
-  return async function (dispatch) {
+export const logOutUserThunk: AppThunk = (refreshToken) => {
+  return async function (dispatch: AppDispatch) {
     const res = await fetch(
       "https://norma.nomoreparties.space/api/auth/logout",
       {
@@ -66,9 +81,9 @@ export const logOutUserThunk = (refreshToken) => {
   };
 };
 
-export const getUserThunk = (accessToken) => {
-  return async function (dispatch) {
-    const res = await retriableFetch(
+export const getUserThunk: AppThunk = (accessToken) => {
+  return async function (dispatch: AppDispatch) {
+    const res: any = await retriableFetch(
       "https://norma.nomoreparties.space/api/auth/user",
       {
         method: "GET",
@@ -80,8 +95,13 @@ export const getUserThunk = (accessToken) => {
     dispatch({ type: GET_USER, payload: res, isAuth: res.success });
   };
 };
-export const resetUserThunk = (name, email, password, accessToken) => {
-  return async function (dispatch) {
+export const resetUserThunk = (
+  name: string,
+  email: string,
+  password: string,
+  accessToken: string | undefined
+) => {
+  return async function (dispatch: AppDispatch) {
     const res = await fetch("https://norma.nomoreparties.space/api/auth/user", {
       method: "PATCH",
       headers: {

@@ -5,7 +5,7 @@ import {
   CurrencyIcon,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/redusers";
 import { TOGGLE } from "../../services/actions/modal";
 import { GET_ID } from "../../services/actions/ingridient-details";
 import { getOrderInfoThunk } from "../../services/actions/order-details";
@@ -20,40 +20,39 @@ import {
   DECREMENT,
 } from "../../services/actions/burger-ingredients";
 import React, { useMemo } from "react";
+import { TIngredients } from "../../utils/types";
 
-//@ts-ignore
-const BurgerConstructor = (props) => {
-  //@ts-ignore
-  const { isDrag } = useSelector((store) => store.ingredients);
+const BurgerConstructor = () => {
+  const { dragStart, dragEnd } = useSelector((store) => store.ingredients);
   const { constructorIngredients, constructorIngredient } = useSelector(
-    //@ts-ignore
     (store) => store.constructorIngredients
   );
-  //@ts-ignore
+
   const dispatch = useDispatch();
 
   const isAllowOrder = useMemo(() => {
-    //@ts-ignore
-    if (constructorIngredients.find((item) => item.type === "bun")) {
+    if (
+      constructorIngredients.find((item: TIngredients) => item.type === "bun")
+    ) {
       return true;
     } else return false;
   }, [constructorIngredients]);
 
   const handleOrderClick = () => {
-    //@ts-ignore
-    let order = constructorIngredients.map((item) => item._id);
+    let order: string[] = constructorIngredients.map(
+      (item: TIngredients) => item._id
+    );
     dispatch({ type: TOGGLE });
     dispatch(getOrderInfoThunk(order));
   };
-  //@ts-ignore
-  const handleClick = (e) => {
-    let id = e.currentTarget.id;
+
+  const handleClick = (e: React.SyntheticEvent) => {
+    let id: string = e.currentTarget.id;
     dispatch({ type: GET_ID, payload: id });
   };
-  //@ts-ignore
-  const handleDragOver = (e) => e.preventDefault();
-  //@ts-ignore
-  const handleDropMain = (e) => {
+
+  const handleDragOver = (e: React.DragEvent) => e.preventDefault();
+  const handleDropMain = () => {
     if (constructorIngredient.isAdded === false) {
       dispatch({
         type: ADD_CONSTRUCTOR_INGREDIENTS,
@@ -62,14 +61,11 @@ const BurgerConstructor = (props) => {
       dispatch({ type: INCREMENT, payload: constructorIngredient });
     }
   };
-  //@ts-ignore
-  const handleDragOverElem = (e) => e.preventDefault();
-  //@ts-ignore
-  const handleDropElem = (e) => {
-    //@ts-ignore
+
+  const handleDragOverElem = (e: React.DragEvent) => e.preventDefault();
+  const handleDropElem = (e: React.DragEvent) => {
     const changeIngredient = constructorIngredients.find(
-      //@ts-ignore
-      (item) => item.index == e.currentTarget.id
+      (item: TIngredients) => item.index == Number(e.currentTarget.id)
     );
     if (constructorIngredient.isAdded === true) {
       dispatch({
@@ -79,36 +75,33 @@ const BurgerConstructor = (props) => {
     }
   };
 
-  //@ts-ignore
-  const handleDragElem = (e) => {
+  const handleDragElem = (e: React.DragEvent) => {
     e.preventDefault();
   };
 
-  //@ts-ignore
-  const handleDragStartElem = (e) => {
-    //@ts-ignore
+  const handleDragStartElem = (e: React.DragEvent) => {
     const changeIngredient = constructorIngredients.find(
-      //@ts-ignore
-      (item) => item.index == e.currentTarget.id
+      (item: TIngredients) => item.index == Number(e.currentTarget.id)
     );
     dispatch({ type: ADD_CONSTRUCTOR_INGREDIENT, payload: changeIngredient });
   };
 
-  //@ts-ignore
-  const handleCloseElement = (index, id) => {
-    //@ts-ignore
-    dispatch({ type: REMOVE_CONSTRUCTOR_INGREDIENT, payload: index });
-    dispatch({ type: DECREMENT, payload: id });
+  const handleCloseElement = (index: number, id: string) => {
+    dispatch({ type: REMOVE_CONSTRUCTOR_INGREDIENT, index: index });
+    dispatch({ type: DECREMENT, id: id });
   };
 
-  //@ts-ignore
-  const sum = constructorIngredients.reduce((accum, item) => {
-    if (item.type === "bun") {
-      accum += item.price + item.price;
-    } else accum += item.price;
-    return accum;
-  }, 0);
-  const boxBorder = isDrag ? style.borderOn : style.borderOff;
+  const sum = constructorIngredients.reduce(
+    (accum: number, item: TIngredients) => {
+      if (item.type === "bun") {
+        accum += item.price + item.price;
+      } else accum += item.price;
+      return accum;
+    },
+    0
+  );
+  const boxBorder =
+    (dragStart && style.borderOn) || (dragEnd && style.borderOff);
 
   return (
     <div style={{ width: "50%", display: "flex", justifyContent: "center" }}>
@@ -119,89 +112,78 @@ const BurgerConstructor = (props) => {
           className={"p-2" + " " + boxBorder}
           style={{ display: "flex", flexDirection: "column", gap: "10px" }}
         >
-          {
-            //@ts-ignore
-            constructorIngredients.map((item) => {
-              if (item.type === "bun") {
-                return (
-                  <div
-                    //@ts-ignore
-                    draggable={false}
-                    onDragStart={(e) => e.preventDefault()}
-                    className={style.dragTop}
-                    key={item._id}
-                  >
-                    <div className={style.dragIcon}></div>
-                    <ConstructorElement
-                      type="top"
-                      isLocked={true}
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image_mobile}
-                    />
-                  </div>
-                );
-              }
-            })
-          }
-          <div className={style.drag}>
-            {
-              //@ts-ignore
-              constructorIngredients.map((item, i) => {
-                if (item.type !== "bun") {
-                  return (
-                    <div
-                      draggable={true}
-                      //@ts-ignore
-                      onDrop={handleDropElem}
-                      onDrag={handleDragElem}
-                      onDragStart={handleDragStartElem}
-                      onDragOver={handleDragOverElem}
-                      id={i}
-                      key={i}
-                      className={style.dragItem}
-                    >
-                      <div className={style.dragIcon}>
-                        <DragIcon type="primary" />
-                      </div>
-                      <ConstructorElement
-                        text={item.name}
-                        price={item.price}
-                        thumbnail={item.image_mobile}
-                        //@ts-ignore
-                        handleClose={() => handleCloseElement(i, item._id)}
-                      />
-                    </div>
-                  );
-                }
-              })
+          {constructorIngredients.map((item: TIngredients) => {
+            if (item.type === "bun") {
+              return (
+                <div
+                  draggable={false}
+                  onDragStart={(e) => e.preventDefault()}
+                  className={style.dragTop}
+                  key={item._id}
+                >
+                  <div className={style.dragIcon}></div>
+                  <ConstructorElement
+                    type="top"
+                    isLocked={true}
+                    text={item.name}
+                    price={item.price}
+                    thumbnail={item.image_mobile}
+                  />
+                </div>
+              );
             }
-          </div>
-          {
-            //@ts-ignore
-            constructorIngredients.map((item) => {
-              if (item.type === "bun") {
+          })}
+          <div className={style.drag}>
+            {constructorIngredients.map((item: TIngredients, i: number) => {
+              if (item.type !== "bun") {
                 return (
                   <div
-                    //@ts-ignore
-                    draggable={false}
-                    onDragStart={(e) => e.preventDefault()}
-                    className={style.dragBottom}
-                    key={item._id}
+                    draggable={true}
+                    onDrop={handleDropElem}
+                    onDrag={handleDragElem}
+                    onDragStart={handleDragStartElem}
+                    onDragOver={handleDragOverElem}
+                    id={i.toString()}
+                    key={i}
+                    className={style.dragItem}
                   >
-                    <div className={style.dragIcon}></div>
+                    <div className={style.dragIcon}>
+                      <DragIcon type="primary" />
+                    </div>
                     <ConstructorElement
-                      type="bottom"
-                      isLocked={true}
                       text={item.name}
                       price={item.price}
                       thumbnail={item.image_mobile}
+                      handleClose={() =>
+                        handleCloseElement(Number(i), item._id)
+                      }
                     />
                   </div>
                 );
               }
-            })
-          }
+            })}
+          </div>
+          {constructorIngredients.map((item: TIngredients) => {
+            if (item.type === "bun") {
+              return (
+                <div
+                  draggable={false}
+                  onDragStart={(e) => e.preventDefault()}
+                  className={style.dragBottom}
+                  key={item._id}
+                >
+                  <div className={style.dragIcon}></div>
+                  <ConstructorElement
+                    type="bottom"
+                    isLocked={true}
+                    text={item.name}
+                    price={item.price}
+                    thumbnail={item.image_mobile}
+                  />
+                </div>
+              );
+            }
+          })}
         </div>
         <div
           className="pt-3"

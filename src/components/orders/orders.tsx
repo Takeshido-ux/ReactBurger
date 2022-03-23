@@ -12,32 +12,17 @@ const Orders = () => {
   return (
     <div className={style.profilePage}>
       <div className={style.profileInner}>
-        <NavLink
-          to={PROFILE_ROUTE}
-          className={style.inActiveClass}
-          //@ts-ignore
-          activeClassName={style.activeClass}
-        >
+        <NavLink to={PROFILE_ROUTE} className={style.inActiveClass}>
           <p className={`text text_type_main-medium mt-15 ${style.cursor}`}>
             Профиль
           </p>
         </NavLink>
-        <NavLink
-          to={PROFILE_ORDERS_ROUTE}
-          className={style.inActiveClass}
-          //@ts-ignore
-          activeClassName={style.activeClass}
-        >
+        <NavLink to={PROFILE_ORDERS_ROUTE} className={style.inActiveClass}>
           <p className={`text text_type_main-medium mt-15 ${style.cursor}`}>
             История заказов
           </p>
         </NavLink>
-        <NavLink
-          to={LOGIN_ROUTE}
-          className={style.inActiveClass}
-          //@ts-ignore
-          activeClassName={style.activeClass}
-        >
+        <NavLink to={LOGIN_ROUTE} className={style.inActiveClass}>
           <p className={`text text_type_main-medium mt-15 ${style.cursor}`}>
             Выход
           </p>

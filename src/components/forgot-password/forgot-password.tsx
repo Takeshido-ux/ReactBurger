@@ -7,26 +7,25 @@ import {
   Logo,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { LOGIN_ROUTE, RESET_PASSWORD_ROUTE } from "../../utils/constants";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/redusers/index";
 import { forgotPasswordThunk } from "../../services/actions/reset-password";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //@ts-ignore
   const { answer, pathName } = useSelector((store) => store.resetPassword);
   const [form, setForm] = useState({
     email: "",
   });
-  //@ts-ignore
-  const onChange = (e) => {
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
-  //@ts-ignore
-  const onSubmit = async (e) => {
+
+  const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(forgotPasswordThunk(form.email));
   };
@@ -43,9 +42,7 @@ const ForgotPassword = () => {
           <Input
             type={"text"}
             placeholder={"Укажите e-mail"}
-            //@ts-ignore
             onChange={onChange}
-            //@ts-ignore
             value={form.email}
             name={"email"}
             error={false}

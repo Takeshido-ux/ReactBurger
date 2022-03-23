@@ -9,28 +9,26 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { LOGIN_ROUTE } from "../../utils/constants";
 import { addUserThunk } from "../../services/actions/user";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/redusers/index";
 
 const Register = () => {
-  //@ts-ignore
   const { isAuth } = useSelector((store) => store.user);
   const state = useLocation().state;
   const dispatch = useDispatch();
-  //@ts-ignore
   const [form, setForm] = useState({
     nick: "",
     email: "",
     password: "",
   });
-  //@ts-ignore
-  const onChange = (e) => {
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
-  //@ts-ignore
-  const onSubmit = (e) => {
+
+  const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(addUserThunk(form.email, form.password, form.nick));
   };
@@ -46,9 +44,7 @@ const Register = () => {
           <Input
             type={"text"}
             placeholder={"Name"}
-            //@ts-ignore
             onChange={onChange}
-            //@ts-ignore
             value={form.nick}
             name={"nick"}
             error={false}
@@ -60,9 +56,7 @@ const Register = () => {
           <Input
             type={"text"}
             placeholder={"Email"}
-            //@ts-ignore
             onChange={onChange}
-            //@ts-ignore
             value={form.email}
             name={"email"}
             error={false}
@@ -72,9 +66,7 @@ const Register = () => {
         </div>
         <div className={style.margin}>
           <PasswordInput
-            //@ts-ignore
             onChange={onChange}
-            //@ts-ignore
             value={form.password}
             name={"password"}
           />

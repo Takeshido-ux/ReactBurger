@@ -1,15 +1,15 @@
 import React from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { appRoutes } from "../../routes";
-import { useSelector } from "react-redux";
 import Modal from "../modal/modal";
 
+type TLocation = {
+  background: string | undefined;
+};
+
 const AppRouter = () => {
-  //@ts-ignore
-  const { isAuth } = useSelector((store) => store.user);
   const location = useLocation();
-  //@ts-ignore
-  const background = location.state?.background;
+  const background = (location.state as TLocation)?.background;
 
   return (
     <>

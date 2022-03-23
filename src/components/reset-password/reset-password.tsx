@@ -7,28 +7,25 @@ import {
   Logo,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/redusers/index";
 import { resetPasswordThunk } from "../../services/actions/reset-password";
 import { LOGIN_ROUTE } from "../../utils/constants";
 
 const ResetPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //@ts-ignore
   const { answer, pathName } = useSelector((store) => store.resetPassword);
   const [form, setForm] = useState({
     password: "",
     code: "",
   });
-  //@ts-ignore
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
-  //@ts-ignore
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(resetPasswordThunk(form.password, form.code));
   };
@@ -45,9 +42,7 @@ const ResetPassword = () => {
       <form className={style.form}>
         <div className={style.margin}>
           <PasswordInput
-            //@ts-ignore
             onChange={onChange}
-            //@ts-ignore
             value={form.password}
             name={"password"}
           />
@@ -56,9 +51,7 @@ const ResetPassword = () => {
           <Input
             type={"text"}
             placeholder={"Введите код из письма"}
-            //@ts-ignore
             onChange={onChange}
-            //@ts-ignore
             value={form.code}
             name={"code"}
             error={false}
